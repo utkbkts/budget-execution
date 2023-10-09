@@ -1,0 +1,22 @@
+.gelir-container{
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    form{
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        input{
+            padding: 10px 15px;
+            outline: none;
+            border: 1px solid darkgrey;
+            width: 300px;
+            height: 100px;
+            font-size: 25px;
+            border-radius: 4px;
+        }
+    }
+}
