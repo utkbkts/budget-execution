@@ -1,14 +1,9 @@
 import "./widget.scss";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
 import moment from "moment/moment";
 import { useEffect, useState } from "react";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../../firebase/config";
-const Widget = ({ author, gelir, timestamps }) => {
+const Widget = ({user, author, gelir, timestamps }) => {
   const [gider, setgider] = useState([]);
   const baseSalary = 37974.1;
   let increaseOrDecrease;
@@ -34,7 +29,7 @@ const Widget = ({ author, gelir, timestamps }) => {
 
   useEffect(() => {
     const unsub = onSnapshot(
-      collection(db, "Gider"),
+      query(collection(db, "Gider"), where("userId", "==", user.uid)),
       (snapshot) => {
         let list = [];
         snapshot.docs.forEach((doc) => {

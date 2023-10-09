@@ -59,18 +59,14 @@ const Sidebar = ({handlesignout}) => {
             <span>Gider Düzenle</span>
           </li>
           </Link>
-          <li>
-            <SettingsApplicationsIcon className="icon" />
-            <span>Settings</span>
-          </li>
-          <p className="title">USER</p>
+          <p className="title">Kullanıcı</p>
           <li>
             <AccountCircleOutlinedIcon className="icon" />
-            <span>Profile</span>
+            <span>Profil(yapım aşamasında)</span>
           </li>
           <li>
             <ExitToAppIcon className="icon" />
-            <span onClick={handlesignout}>Logout</span>
+            <span onClick={handlesignout}>Çıkış Yap</span>
           </li>
         </ul>
       </div>

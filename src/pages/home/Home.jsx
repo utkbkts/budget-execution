@@ -39,13 +39,13 @@ const Home = ({ user, setuser, handlesignout }) => {
         <Navbar user={user} setuser={setuser} handlesignout={handlesignout} />
         <div className="widgets">
          {blogs?.map((blog)=>(
-          <Widget {...blog} />
+          <Widget user={user} {...blog} />
          ))}
         </div>
         <div className="charts">
           <Featured user={user} setuser={setuser} handlesignout={handlesignout}/>
          {blogs?.map((blog)=>(
-           <Chart {...blog} title="Son 6 ayın geliri" aspect={2 / 1} />
+           <Chart {...blog} title="Son 6 ayın geliri" aspect={2 / 1} user={user} setuser={setuser} />
          ))}
         </div>
         <div className="listContainer">

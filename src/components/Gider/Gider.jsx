@@ -6,12 +6,12 @@ import {
   addDoc,
   collection,
   doc,
-  getDoc,
+  updateDoc,
+  serverTimestamp,
+  where,
   getDocs,
   query,
-  serverTimestamp,
-  updateDoc,
-  where,
+  getDoc,
 } from "firebase/firestore";
 import { db } from "../../firebase/config";
 import { message } from "antd";
@@ -26,9 +26,9 @@ const initialState = {
 
 const Gider = ({ handlesignout, user, setuser }) => {
   const [form, setForm] = useState(initialState);
-  const [gider, setgider] = useState("");
-  const navigate = useNavigate()
-  const {netgider,kiragider,faturagider,mutfakgider}=form;
+  const navigate = useNavigate();
+  const { netgider, kiragider, faturagider, mutfakgider } = form;
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({
@@ -36,52 +36,50 @@ const Gider = ({ handlesignout, user, setuser }) => {
       [name]: value,
     });
   };
-  useEffect(() => {
-    const oncekigider = async () => {
-      const giderref = doc(db, "Gider", user.uid);
-      const giderdocsnap = await getDoc(giderref);
 
-      if (giderdocsnap.exists()) {
-        const oncekigider = giderdocsnap.data().ayliknetgider;
-        setgider(oncekigider);
+  useEffect(() => {
+    const checkPreviousGider = async () => {
+      const giderRef = doc(db, "Gider", user.uid);
+      const giderDoc = await getDoc(giderRef);
+
+      if (giderDoc.exists()) {
+        const previousGider = giderDoc.data();
+        setForm(previousGider);
       }
     };
-    oncekigider()
+
+    checkPreviousGider();
   }, [user?.uid]);
-  
-  if (!user?.uid) {
-    console.error("user.uid tanımlı değil veya null/undefined.");
-  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    if (netgider && mutfakgider && faturagider && kiragider) {
+
+    if (netgider && kiragider && faturagider && mutfakgider) {
       try {
-        const querySnapshot = await getDocs(
-          query(collection(db, "Gider"), where("userId", "==", user.uid))
-        );
-  
-        if (!querySnapshot.empty) {
+        const giderRef = doc(db, "Gider", user.uid);
+        const giderDoc = await getDoc(giderRef);
+
+        if (giderDoc.exists()) {
           // User already has a record, update it
-          const doc = querySnapshot.docs[0];
-          await updateDoc(doc.ref, {
+          await updateDoc(giderRef, {
             ...form,
             timestamps: serverTimestamp(),
+            userId: user.uid,
           });
-          message.success("Başarıyla güncellendi");
+          message.success("Gider bilgileri güncellendi");
         } else {
-          // Create a new record if it doesn't exist
+          // User doesn't have a record, create a new one
           await addDoc(collection(db, "Gider"), {
             ...form,
             timestamps: serverTimestamp(),
-            author: user.displayName,
             userId: user.uid,
           });
-          message.success("Başarıyla oluşturuldu");
+          message.success("Gider bilgileri kaydedildi");
         }
+
         navigate("/");
       } catch (error) {
-        console.log(error);
+        console.error("Hata:", error);
         message.error("Hata oluştu");
       }
     } else {
@@ -93,9 +91,9 @@ const Gider = ({ handlesignout, user, setuser }) => {
     <div className="new">
       <Sidebar />
       <div className="newContainer">
-        <Navbar  handlesignout={ handlesignout} user={user} setuser={setuser}/>
+        <Navbar handlesignout={handlesignout} user={user} setuser={setuser} />
         <div className="top">
-          <h1>Gelir Düzenle</h1>
+          <h1>Gider Düzenle</h1>
         </div>
         <div className="gider-container">
           <form onSubmit={handleSubmit}>

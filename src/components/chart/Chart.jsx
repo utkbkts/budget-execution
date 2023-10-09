@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import {
   AreaChart,
   Area,
@@ -13,12 +13,12 @@ import {
 } from "recharts";
 import { db } from "../../firebase/config";
 
-const Chart = ({ aspect, title }) => {
+const Chart = ({ setuser, user }) => {
   const [gider, setGider] = useState([]);
 
   useEffect(() => {
     const unsub = onSnapshot(
-      collection(db, "Gider"),
+      query(collection(db, "Gider"), where("userId", "==", user.uid)),
       (snapshot) => {
         const giderData = snapshot.docs.map((doc, index) => ({
           name: `Entry ${index + 1}`,
@@ -39,8 +39,7 @@ const Chart = ({ aspect, title }) => {
     return () => {
       unsub();
     };
-  }, []);
-
+  }, [user,user.uid]);
   return (
     <div className="chart">
     <div className="title">Son Kaydedilen Giderler</div>
@@ -51,9 +50,9 @@ const Chart = ({ aspect, title }) => {
         <YAxis />
         <Tooltip />
         <Bar dataKey="kiragider" fill="#8884d8" />
-        <Bar dataKey="netgider" fill="#8884d8" />
-        <Bar dataKey="mutfakgider" fill="#8884d8" />
-        <Bar dataKey="faturagider" fill="#8884d8" />
+          <Bar dataKey="netgider" fill="#82ca9d" />
+          <Bar dataKey="mutfakgider" fill="#ff7f50" />
+          <Bar dataKey="faturagider" fill="#008080" />
       </BarChart>
     </ResponsiveContainer>
   </div>
