@@ -27,7 +27,6 @@ function App() {
     auth.onAuthStateChanged((authUser) => {
       if (authUser) {
         setuser(authUser);
-        navigate("/", { replace: true });
       } else {
         setuser(null);
         const currentPath = window.location.pathname;
@@ -76,13 +75,11 @@ function App() {
           <Route
             path="gider"
             element={
-              user ? (
-                <Gider
-                  handlesignout={handlesignout}
-                  user={user}
-                  setuser={setuser}
-                />
-              ) : null
+              <Gider
+                handlesignout={handlesignout}
+                user={user}
+                setuser={setuser}
+              />
             }
           />
 

@@ -37,11 +37,11 @@ const Home = ({ user, setuser, handlesignout }) => {
       <Sidebar handlesignout={handlesignout}/>
       <div className="homeContainer">
         <Navbar user={user} setuser={setuser} handlesignout={handlesignout} />
-        <div className="widgets">
+       {blogs.length > 0 ? ( <div className="widgets">
          {blogs?.map((blog)=>(
           <Widget user={user} {...blog} />
          ))}
-        </div>
+        </div>):(<h1 style={{textAlign:"center"}}>Henüz veri eklemedin</h1>)}
         <div className="charts">
           <Featured user={user} setuser={setuser} handlesignout={handlesignout}/>
          {blogs?.map((blog)=>(
