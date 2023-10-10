@@ -6,17 +6,18 @@ import { addDoc, collection, serverTimestamp, doc, updateDoc, getDoc, query, whe
 import { db } from "../../firebase/config";
 import { message } from "antd";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../spinner/Spinner";
 
 const Gelir = ({ handlesignout, user, setuser }) => {
   const [gelir, setGelir] = useState("");
   const navigate = useNavigate();
-
+  const [loading, setloading] = useState(true);
   useEffect(() => {
     // Kullanıcının daha önce kaydedilmiş gelirini kontrol et
     const checkPreviousGelir = async () => {
       const gelirDocRef = doc(db, "Gelir", user.uid);
       const gelirDocSnap = await getDoc(gelirDocRef);
-  
+      setloading(false);
       if (gelirDocSnap.exists()) {
         const previousGelir = gelirDocSnap.data().gelir;
         setGelir(previousGelir);
@@ -59,10 +60,13 @@ const Gelir = ({ handlesignout, user, setuser }) => {
       } catch (error) {
         console.log(error);
         message.error("Hata oluştu");
+        setloading(false);
       }
     }
   };
-
+  if (loading) {
+    return <Spinner />;
+  }
   return (
     <div className="new">
       <Sidebar />

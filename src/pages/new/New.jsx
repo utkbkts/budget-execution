@@ -31,7 +31,7 @@ const New = ({ user, setuser, handlesignout }) => {
   const koleksiyonolustur = async (e) => {
     e.preventDefault();
 
-    if (name &&file&& adet && selected && tarih) {
+    if (name &&file&& adet && selected) {
       try {
         const querysnapshot = await getDocs(
           query(collection(db, "alısveris"), where("userId", "==", user.uid))

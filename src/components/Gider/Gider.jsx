@@ -16,6 +16,7 @@ import {
 import { db } from "../../firebase/config";
 import { message } from "antd";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../spinner/Spinner";
 
 const initialState = {
   netgider: "",
@@ -28,6 +29,7 @@ const Gider = ({ handlesignout, user, setuser }) => {
   const [form, setForm] = useState(initialState);
   const navigate = useNavigate();
   const { netgider, kiragider, faturagider, mutfakgider } = form;
+  const [loading, setloading] = useState(true);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -41,7 +43,7 @@ const Gider = ({ handlesignout, user, setuser }) => {
     const checkPreviousGider = async () => {
       const giderRef = doc(db, "Gider", user.uid);
       const giderDoc = await getDoc(giderRef);
-
+      setloading(false);
       if (giderDoc.exists()) {
         const previousGider = giderDoc.data();
         setForm(previousGider);
@@ -81,12 +83,15 @@ const Gider = ({ handlesignout, user, setuser }) => {
       } catch (error) {
         console.error("Hata:", error);
         message.error("Hata oluştu");
+        setloading(false);
       }
     } else {
       message.error("Lütfen gider bilgilerini eksiksiz doldurun.");
     }
   };
-
+  if (loading) {
+    return <Spinner />;
+  }
   return (
     <div className="new">
       <Sidebar />

@@ -8,18 +8,21 @@ import { db } from "../../firebase/config";
 
 const Featured = ({ user, setuser }) => {
   const [mostPurchasedProduct, setMostPurchasedProduct] = useState(null);
-
+  const [totalPurchaseCount, setTotalPurchaseCount] = useState(0);
+  const [percentage, setPercentage] = useState(0);
   useEffect(() => {
     if (user && user.uid) {
       const unsub = onSnapshot(
         query(collection(db, "alısveris"), where("userId", "==", user.uid)),
         (snapshot) => {
           const productCounts = {};
-
+          let totalPurchases = 0;
           snapshot.docs.forEach((doc) => {
             const item = doc.data();
             const productName = item.isim;
-            productCounts[productName] = (productCounts[productName] || 0) + item.adet;
+            const purchaseCount = item.adet;
+            productCounts[productName] = (productCounts[productName] || 0) + purchaseCount;
+            totalPurchases += purchaseCount;
           });
 
           let mostPurchasedProductName = null;
@@ -38,6 +41,10 @@ const Featured = ({ user, setuser }) => {
               purchaseCount: maxCount,
             };
             setMostPurchasedProduct(mostPurchasedProduct);
+            setTotalPurchaseCount(totalPurchases);
+
+             const calculatedPercentage = (maxCount / totalPurchases) * 100;
+            setPercentage(calculatedPercentage);
           }
         },
         (error) => {
@@ -59,7 +66,7 @@ const Featured = ({ user, setuser }) => {
       </div>
       <div className="bottom">
         <div className="featuredChart">
-          <CircularProgressbar value={70} text={"70%"} strokeWidth={5} />
+          <CircularProgressbar  value={percentage} text={`${percentage.toFixed(2)}%`} strokeWidth={5} />
         </div>
         {mostPurchasedProduct && mostPurchasedProduct.productName && (
           <>
