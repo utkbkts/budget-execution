@@ -32,7 +32,7 @@ const Navbar = ({ user, setuser, handlesignout }) => {
           <SearchOutlinedIcon />
         </div>
         <div className={`items ${hamburger ? "active" : ""}`}>
-          <div className="center">
+          <div className={`center ${hamburger ? "active" : ""}`}>
             <ul>
               <div className="item">
                 <DarkModeOutlinedIcon

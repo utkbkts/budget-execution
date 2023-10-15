@@ -1,6 +1,10 @@
+@import "../../mixin.scss";
 .home {
   display: flex;
-
+@include phone{
+  flex-direction: column;
+  width: 100%;
+}
   .homeContainer {
     flex: 6;
 
@@ -13,6 +17,29 @@
 
     .charts {
       padding: 5px 20px;
+      @include phone {
+        width: 100%;
+      }
+      .recharts-responsive-container{
+        @include phone {
+          width: 100% !important;
+        }
+        .recharts-wrapper{
+          @include phone {
+            width: 100% !important;
+          }
+
+          .recharts-surface{
+            @include phone {
+              width: 100% !important;
+            }
+          }
+        }
+       
+      }
+      @include phone {
+        flex-direction: column;
+      }
     }
 
     .listContainer {

@@ -1,3 +1,4 @@
+@import "../../mixin.scss";
 .widget {
   display: flex;
   justify-content: space-between;
@@ -7,6 +8,12 @@
   box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
   border-radius: 10px;
   height: 100%;
+
+  @include phone{
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+  }
   .widget-item {
     display: flex;
     justify-content: space-between;

@@ -54,7 +54,7 @@
     position: absolute;
     justify-content: center;
     left: 0;
-    background:rgba(0, 0, 0, 0.938);
+    background: white;
     height: 100vh;
     width: 0;
     top: 0;
@@ -64,6 +64,11 @@
       width: 40%;
     }
     .center{
+      transform: translateX(-50%);
+
+      &.active{
+      transform: translateX(0%);
+      }
       ul{
         display: flex;
         flex-direction: column;
@@ -71,17 +76,21 @@
       }
     }
     li{
-      color: white;
+      color: black;
       display: flex;
       align-items: center;
       gap: 1rem;
+      transition: color .5s;
+      &:hover{
+        color: rgba(0,0,0,0.5);
+      }
     }
     a{
       text-decoration: none !important;
       font-size: 15px;
       }
     .item{
-      color: white;
+      color: black;
       display: flex;
       flex-direction: column;
       align-items: center;

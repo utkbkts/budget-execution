@@ -1,3 +1,4 @@
+@import "../../mixin.scss";
 .container-login {
   display: flex;
   height: 100vh;
@@ -29,6 +30,9 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
+    @include phone{
+      display: none;
+    }
     .image{
       height: 100%;
     }
@@ -37,3 +41,4 @@
     }
   }
 }
+
