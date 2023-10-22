@@ -6,46 +6,30 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { useEffect, useState } from "react";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { db } from "../../firebase/config";
+import moment from "moment";
 
-const List = () => {
-  const rows = [
-    {
-      id: 1143155,
-      ürün: "Acer Nitro 5",
-      Resim: "https://m.media-amazon.com/images/I/81bc8mA3nKL._AC_UY327_FMwebp_QL65_.jpg",
-      Tarih: "1 March",
-      Fiyat: 785,
-      Ödemeşekli: "Kredi kartı",
-      status: "Acil",
-    },
-    {
-      id: 1143155,
-      ürün: "Acer Nitro 5",
-      Resim: "https://m.media-amazon.com/images/I/81bc8mA3nKL._AC_UY327_FMwebp_QL65_.jpg",
-      Tarih: "1 March",
-      Fiyat: 785,
-      Ödemeşekli: "Kredi kartı",
-      status: "Acil",
-    },
-    {
-      id: 1143155,
-      ürün: "Acer Nitro 5",
-      Resim: "https://m.media-amazon.com/images/I/81bc8mA3nKL._AC_UY327_FMwebp_QL65_.jpg",
-      Tarih: "1 March",
-      Fiyat: 785,
-      Ödemeşekli: "Kredi kartı",
-      status: "Acil",
-    },
-    {
-      id: 1143155,
-      ürün: "Acer Nitro 5",
-      Resim: "https://m.media-amazon.com/images/I/81bc8mA3nKL._AC_UY327_FMwebp_QL65_.jpg",
-      Tarih: "1 March",
-      Fiyat: 785,
-      Ödemeşekli: "Kredi kartı",
-      status: "Normal",
-    },
-  ];
+const List = ({user}) => {
+  const [blogs, setblogs] = useState([]);
+  useEffect(() => {
+    const unsub = onSnapshot(
+      query(collection(db, "alısveris"), where("userId", "==", user.uid)),
+      (snapshot) => {
+        let list = [];
+
+        snapshot.docs.forEach((doc) => {
+          list.push({ id: doc.id, ...doc.data() });
+        });
+        setblogs(list);
+      }
+    );
+    return () => {
+      unsub();
+    };
+  }, []);
+  console.log(blogs);
   return (
     <TableContainer component={Paper} className="table">
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -55,27 +39,25 @@ const List = () => {
             <TableCell className="tableCell">Ürün</TableCell>
             <TableCell className="tableCell">Resim</TableCell>
             <TableCell className="tableCell">Tarih</TableCell>
-            <TableCell className="tableCell">Fiyat</TableCell>
+            <TableCell className="tableCell">Adet</TableCell>
             <TableCell className="tableCell">ödeme şekli</TableCell>
-            <TableCell className="tableCell">durum</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow>
-              <TableCell className="tableCell">{row.id}</TableCell>
+          {blogs?.map((item,index) => (
+            <TableRow key={item.id}>
+              <TableCell className="tableCell">{index + 1}</TableCell>
               <TableCell className="tableCell">
                 <div className="cellWrapper">
-                  <img src={row.img} alt="" className="image" />
-                  {row.product}
+                  <span>{item.isim}</span>
                 </div>
               </TableCell>
-              <TableCell className="tableCell">{row.customer}</TableCell>
-              <TableCell className="tableCell">{row.date}</TableCell>
-              <TableCell className="tableCell">{row.amount}</TableCell>
-              <TableCell className="tableCell">{row.method}</TableCell>
+              <TableCell className="tableCell"><img width={"40px"} src={item.resim} alt="" /></TableCell>
+              <TableCell className="tableCell">{moment(item.tarih?.toDate()).format("L")}</TableCell>
+              <TableCell className="tableCell">{item.adet}</TableCell>
+              <TableCell className="tableCell">{item.odemesekli}</TableCell>
               <TableCell className="tableCell">
-                <span className={`status ${row.status}`}>{row.status}</span>
+                <span className={`status `}></span>
               </TableCell>
             </TableRow>
           ))}
