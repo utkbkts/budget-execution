@@ -5,40 +5,17 @@ import { Button, Checkbox, Form, Input, message } from "antd";
 import "./login.scss";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/config";
-import OwlCarousel from "react-owl-carousel";
-import "owl.carousel/dist/assets/owl.carousel.css";
-import "owl.carousel/dist/assets/owl.theme.default.css";
 import image1 from "../../components/image/Business Plan-cuate.png";
 import image2 from "../../components/image/Learning-amico.png";
 import image3 from "../../components/image/Learning-bro.png";
 import image4 from "../../components/image/Team work-cuate.png";
-
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from "react-responsive-carousel";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const options = {
-    loop: true,
-    margin: 10,
-    nav: true,
-    dots: false,
-    autoplay: true,
-    autoplayTimeout: 3000,
-    responsive: {
-      0: {
-        items: 1,
-        400: {
-          items: 2,
-        },
-        600: {
-          items: 3,
-        },
-        800: {
-          items: 4,
-        },
-      },
-    },
-  };
+
   const onFinish = async (e) => {
     try {
       if (email && password) {
@@ -137,20 +114,20 @@ const Login = () => {
         </Form.Item>
       </Form>
       <div className="slider-login">
-        <OwlCarousel {...options}>
+        <Carousel showThumbs={false} autoPlay={true} infiniteLoop={true}>
           <div className="image">
-            <img src={image1} alt="" />
+            <img className="" src={image1} />
           </div>
-          <div className="image1">
-            <img src={image2} alt="" />
+          <div className="image">
+            <img className="" src={image2} />
           </div>
-          <div className="image2">
-            <img src={image3} alt="" />
+          <div className="image">
+            <img className="" src={image3} />
           </div>
-          <div className="image3">
-            <img src={image4} alt="" />
+          <div className="image">
+            <img className="" src={image4} />
           </div>
-        </OwlCarousel>
+        </Carousel>
       </div>
     </div>
   );
