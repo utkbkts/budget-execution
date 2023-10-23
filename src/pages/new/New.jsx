@@ -24,13 +24,15 @@ const New = ({ user, setuser, handlesignout }) => {
   const [name, setname] = useState("");
   const [file, setFile] = useState(null);
   const [adet, setadet] = useState("");
+  const [fiyat, setfiyat] = useState("");
   const [tarih, settarih] = useState("");
+  const [loading, setloading] = useState("");
   const [selected, setselected] = useState("");
   const navigate = useNavigate();
 
   const koleksiyonolustur = async (e) => {
     e.preventDefault();
-
+    setloading(true)
     if (name &&file&& adet && selected) {
       try {
         const querysnapshot = await getDocs(
@@ -59,14 +61,17 @@ const New = ({ user, setuser, handlesignout }) => {
             isim:name,
             resim:dowloadurl,
             adet:adet,
+            fiyat:fiyat,
             odemesekli:selected,
             tarih:serverTimestamp(),
           });
           message.success("Başarıyla oluşturuldu");
         }
         navigate("/users");
+    setloading(false)
       } catch (error) {
         console.log(error);
+    setloading(false)
         message.error("Hata oluştu");
       }
     } else {
@@ -120,9 +125,17 @@ const New = ({ user, setuser, handlesignout }) => {
               <div>
                 <input
                   value={adet}
-                  onChange={(e) => setadet(e.target.value)}
+                  onChange={(e) => setadet(parseInt(e.target.value, 10))}
                   type="number"
                   placeholder="Adet giriniz"
+                />
+              </div>
+              <div>
+                <input
+                  value={fiyat}
+                  onChange={(e) => setfiyat(parseInt(e.target.value, 10))}
+                  type="number"
+                  placeholder="Fiyat giriniz"
                 />
               </div>
               <select
@@ -133,7 +146,7 @@ const New = ({ user, setuser, handlesignout }) => {
                 <option value="KrediKartı">Kredi Kartı</option>
                 <option value="Nakit">Nakit</option>
               </select>
-              <button type="submit">İşlem Ekle</button>
+              {loading ? <button type="submit" disabled>İşlem Ekleniyor...</button>:<button type="submit">İşlem Ekle</button>}
             </form>
           </div>
         </div>

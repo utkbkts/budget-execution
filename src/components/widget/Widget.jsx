@@ -45,7 +45,6 @@ const Widget = ({user, author, gelir, timestamps }) => {
       unsub();
     };
   }, []);
-  console.log(gider);
   return (
     <div className="widget">
       <div className="widget-item">

@@ -17,6 +17,7 @@ import Gelir from "./components/Gelir/Gelir";
 import Gider from "./components/Gider/Gider";
 import { auth } from "./firebase/config";
 import { signOut } from "firebase/auth";
+import Navbar from "./components/navbar/Navbar";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);

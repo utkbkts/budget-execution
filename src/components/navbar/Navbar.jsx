@@ -13,9 +13,8 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link } from "react-router-dom";
 const Navbar = ({ user, setuser, handlesignout }) => {
-  const { dispatch } = useContext(DarkModeContext);
+  const { dispatch,darkMode } = useContext(DarkModeContext);
   const [hamburger, sethamburger] = useState(false);
-
   const handleclick = () => {
     sethamburger(!hamburger);
   };

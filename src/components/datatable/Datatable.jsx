@@ -7,6 +7,7 @@ import {
   doc,
   onSnapshot,
   query,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import { db } from "../../firebase/config";
@@ -46,6 +47,18 @@ const Datatable = ({ user, setuser, handlesignout }) => {
       message.info("Veri silinmedi");
     }
   };
+  console.log(blogs);
+  const [editItemId, setEditItemId] = useState(null);
+  const handleEdit = async (id, newData) => {
+    try {
+      // Update data in Firebase
+      await updateDoc(doc(db, "alısveris", id), newData);
+      message.success("Veri Başarıyla Güncellendi");
+      setEditItemId(null);
+    } catch (error) {
+      message.error("Veri güncellenirken hata oluştu");
+    }
+  };
   return (
     <div className="datatable">
       <div className="datatableTitle">
@@ -54,6 +67,7 @@ const Datatable = ({ user, setuser, handlesignout }) => {
           Ekle
         </Link>
       </div>
+      <div className="tableContainer ">
       <table>
         <thead>
           <tr>
@@ -62,14 +76,15 @@ const Datatable = ({ user, setuser, handlesignout }) => {
             <th>isim</th>
             <th>Ödeme Şekli</th>
             <th>Adet</th>
+            <th>Fiyat</th>
             <th>Tarih</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {blogs?.map((x) => (
+          {blogs?.map((x, index) => (
             <tr key={x.id}>
-              <td>1</td>
+              <td>{index + 1}</td>
               <td>
                 <img
                   style={{ width: "50px", height: "50px" }}
@@ -80,15 +95,17 @@ const Datatable = ({ user, setuser, handlesignout }) => {
               <td>{x.isim}</td>
               <td>{x.odemesekli}</td>
               <td>{x.adet}</td>
+              <td>{x.fiyat}₺</td>
               <td>{moment(x.timestamps?.toDate()).format("L")}</td>
               <td>
                 <button onClick={() => handleDelete(x.id)}>Sil</button>
-                <button>Düzenle</button>{" "}
+                <button onClick={() => handleEdit(x.id)}>Düzenle</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 };

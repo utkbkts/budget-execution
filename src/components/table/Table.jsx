@@ -29,7 +29,6 @@ const List = ({user}) => {
       unsub();
     };
   }, []);
-  console.log(blogs);
   return (
     <TableContainer component={Paper} className="table">
       <Table sx={{ minWidth: 650 }} aria-label="simple table">

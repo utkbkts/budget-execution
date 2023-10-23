@@ -73,7 +73,7 @@ const Home = ({ user, setuser, handlesignout }) => {
           ))}
         </div>
         <div className="listContainer">
-          <div className="listTitle">Son 6 ay geçmiş</div>
+          <div className="listTitle">Son Aldıkların</div>
           <Table user={user}/>
         </div>
       </div>

@@ -10,6 +10,7 @@ const Featured = ({ user, setuser }) => {
   const [mostPurchasedProduct, setMostPurchasedProduct] = useState(null);
   const [totalPurchaseCount, setTotalPurchaseCount] = useState(0);
   const [percentage, setPercentage] = useState(0);
+
   useEffect(() => {
     if (user && user.uid) {
       const unsub = onSnapshot(
@@ -17,16 +18,18 @@ const Featured = ({ user, setuser }) => {
         (snapshot) => {
           const productCounts = {};
           let totalPurchases = 0;
+
           snapshot.docs.forEach((doc) => {
             const item = doc.data();
             const productName = item.isim;
             const purchaseCount = item.adet;
-            productCounts[productName] = (productCounts[productName] || 0) + purchaseCount;
+            productCounts[productName] =
+              (productCounts[productName] || 0) + purchaseCount;
             totalPurchases += purchaseCount;
           });
 
           let mostPurchasedProductName = null;
-          let maxCount = 0;
+          let maxCount = "";
 
           Object.keys(productCounts).forEach((productName) => {
             if (productCounts[productName] > maxCount) {
@@ -43,9 +46,12 @@ const Featured = ({ user, setuser }) => {
             setMostPurchasedProduct(mostPurchasedProduct);
             setTotalPurchaseCount(totalPurchases);
 
-             const calculatedPercentage = (maxCount / totalPurchases) * 100;
+            const calculatedPercentage = (maxCount / totalPurchases) * 100;
             setPercentage(calculatedPercentage);
           }
+          console.log("productCounts", productCounts);
+          console.log("mostPurchasedProductName", mostPurchasedProductName);
+          console.log("maxCount", maxCount);
         },
         (error) => {
           console.log(error);
@@ -66,12 +72,18 @@ const Featured = ({ user, setuser }) => {
       </div>
       <div className="bottom">
         <div className="featuredChart">
-          <CircularProgressbar  value={percentage} text={`${percentage.toFixed(2)}%`} strokeWidth={5} />
+          <CircularProgressbar
+            value={percentage}
+            text={`${percentage.toFixed(2)}%`}
+            strokeWidth={5}
+          />
         </div>
         {mostPurchasedProduct && mostPurchasedProduct.productName && (
           <>
-            <p className="title">En çok aldığın ürün: {mostPurchasedProduct.productName}</p>
-            <p className="amount">Adet: {mostPurchasedProduct.purchaseCount}</p>
+            <p className="title">
+              En çok aldığın ürün: {mostPurchasedProduct.productName}
+            </p>
+            <p className="amount">Adet: {mostPurchasedProduct.purchaseCount.toString().replace(/^0+/, '')}</p>
           </>
         )}
       </div>

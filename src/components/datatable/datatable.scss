@@ -1,7 +1,16 @@
 .datatable {
   height: 600px;
   padding: 20px;
+  .tableContainer {
+    overflow-x: scroll;
+    width: 100%;
+    max-width: calc(100vw - 50px);
 
+    table{
+      min-width: 800px;
+    }
+  }
+  
  table{
   border-collapse: collapse;
   width: 100%;
