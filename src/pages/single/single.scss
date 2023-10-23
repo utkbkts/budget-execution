@@ -27,6 +27,7 @@
           cursor: pointer;
           border-radius: 0px 0px 0px 5px;
         }
+       
 
         .item {
           display: flex;
@@ -40,23 +41,38 @@
           }
 
           .details {
+            display: flex;
+            flex-direction: column;
+            align-items: start;
             .itemTitle {
               margin-bottom: 10px;
               color: #555;
+            }
+            .date{
+              display: flex;
+              align-items: center;
+              gap: 1rem;
+              input{
+              }
             }
 
             .detailItem {
               margin-bottom: 10px;
               font-size: 14px;
-
+              display: flex;
+              flex-direction: column;
               .itemKey {
                 font-weight: bold;
                 color: gray;
                 margin-right: 5px;
               }
 
-              .itemValue {
+              input {
                 font-weight: 300;
+                background: transparent;
+                outline: none;
+                border-bottom: 1px solid #555 !important;
+                border: none;
               }
             }
           }
@@ -80,5 +96,59 @@
       color: lightgray;
       margin-bottom: 20px;
     }
+  }
+}
+.sidebar-flex{
+  flex: 1;
+    border-right: 0.5px solid rgb(230, 227, 227);
+    background-color: white;
+}
+.randevu-section{
+  flex: 6;
+
+  .randevukapsam{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 10px;
+    .randevu{
+      padding: 15px;
+      width: 100%;
+      height: 100%;
+      background: #F5F7F8;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      .section-two{
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .bilgi{
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        .normal {
+          color: blue; 
+        }
+        
+        .acil {
+          color: red; 
+        }
+        
+        .silButton{
+          position: absolute;
+          bottom: -4rem;
+          right: 0;
+          padding: 5px;
+          font-size: 15px;
+          color: #7451f8;
+          background-color: #7551f818;
+          cursor: pointer;
+          border-radius: 0px 0px 0px 5px;
+        }
+      }
+  }
+ 
   }
 }

@@ -18,6 +18,8 @@ import Gider from "./components/Gider/Gider";
 import { auth } from "./firebase/config";
 import { signOut } from "firebase/auth";
 import Navbar from "./components/navbar/Navbar";
+import Reset from "./pages/reset/Reset";
+import Hatirlatma from "./pages/hatirlatma/Hatirlatma";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -31,7 +33,11 @@ function App() {
       } else {
         setuser(null);
         const currentPath = window.location.pathname;
-        if (currentPath !== "/login" && currentPath !== "/register") {
+        if (
+          currentPath !== "/login" &&
+          currentPath !== "/register" &&
+          currentPath !== "/reset"
+        ) {
           navigate("/login");
         }
       }
@@ -59,7 +65,18 @@ function App() {
               ) : null
             }
           />
-
+          <Route
+            path="/hatirlatma"
+            element={
+              user ? (
+                <Hatirlatma
+                  handlesignout={handlesignout}
+                  user={user}
+                  setuser={setuser}
+                />
+              ) : null
+            }
+          />
           <Route
             path="gelir"
             element={
@@ -117,6 +134,7 @@ function App() {
         <Routes>
           {" "}
           <Route path="login" element={<Login />} />
+          <Route path="reset" element={<Reset />} />
           <Route path="register" element={<Register />} />
         </Routes>
       )}

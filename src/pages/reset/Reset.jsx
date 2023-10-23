@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input, message } from "antd";
-import "./login.scss";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import React, {  useState } from "react";
+import {  UserOutlined } from "@ant-design/icons";
+import { Button, Form, Input, message } from "antd";
+import "../login/Login.scss";
 import { auth } from "../../firebase/config";
 import image1 from "../../components/image/Business Plan-cuate.png";
 import image2 from "../../components/image/Learning-amico.png";
@@ -11,25 +9,20 @@ import image3 from "../../components/image/Learning-bro.png";
 import image4 from "../../components/image/Team work-cuate.png";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
-const Login = () => {
+import { sendPasswordResetEmail } from "firebase/auth";
+const Reset = () => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();
 
   const onFinish = async (e) => {
     try {
-      if (email && password) {
-        const { user } = await signInWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
-        localStorage.setItem("user", JSON.stringify(user));
-        navigate("/");
-        message.success("Başarıyla giriş yapıldı");
-      }
+        if (email) {
+            await sendPasswordResetEmail(auth, email);
+            message.success("Şifren sıfırlandı email hesabını kontrol et");
+          } else {
+            message.error("Parola sıfırlanamadı tekrar deneyiniz");
+          }
     } catch (error) {
-      console.log(error.message);
+        message.error("Belirlenemeyen bir hata oluştu");
     }
   };
 
@@ -39,10 +32,6 @@ const Login = () => {
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
   };
 
   return (
@@ -56,7 +45,7 @@ const Login = () => {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
-        <h1>Giriş Sayfası</h1>
+        <h1>Parola Yenile</h1>
         <Form.Item
           name="email"
           rules={[
@@ -73,44 +62,14 @@ const Login = () => {
             placeholder="Email"
           />
         </Form.Item>
-        <Form.Item
-          name="password"
-          rules={[
-            {
-              required: true,
-              message: "Lütfen şifrenizi giriniz!",
-            },
-          ]}
-        >
-          <Input
-            value={password}
-            onChange={handlePasswordChange}
-            prefix={<LockOutlined className="site-form-item-icon" />}
-            type="password"
-            placeholder="Parola"
-          />
-        </Form.Item>
-        <Form.Item>
-          <Form.Item name="remember" valuePropName="checked" noStyle>
-            <Checkbox>Beni Hatırla</Checkbox>
-          </Form.Item>
-
-          <Link to={"/reset"} className="login-form-forgot" href="">
-            Şifreni mi unuttun ?
-          </Link>
-        </Form.Item>
-
         <Form.Item>
           <Button
             type="primary"
             htmlType="submit"
             className="login-form-button"
           >
-            Giriş Yap
+            Parola Sıfırla
           </Button>
-          <h4>
-            Hesabın yok mu ? <Link to="/register">Kayıt ol</Link>
-          </h4>
         </Form.Item>
       </Form>
       <div className="slider-login">
@@ -133,4 +92,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Reset;

@@ -41,10 +41,10 @@ const Sidebar = ({handlesignout}) => {
               <span>Fatura Ekle</span>
             </li>
           </Link>
-          <Link to="/fiskaydi" style={{ textDecoration: "none" }}>
+          <Link to="/hatirlatma" style={{ textDecoration: "none" }}>
             <li>
               <StoreIcon className="icon" />
-              <span>Son 10 İşlem</span>
+              <span>Hatırlatmalar</span>
             </li>
           </Link>
          <Link to={"/gelir"}>
