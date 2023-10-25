@@ -1,7 +1,7 @@
 import React, {  useState } from "react";
 import {  UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input, message } from "antd";
-import "../login/Login.scss";
+import "../login/login.scss";
 import { auth } from "../../firebase/config";
 import image1 from "../../components/image/Business Plan-cuate.png";
 import image2 from "../../components/image/Learning-amico.png";
