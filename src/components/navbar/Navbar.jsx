@@ -33,12 +33,6 @@ const Navbar = ({ user, setuser, handlesignout }) => {
         <div className={`items ${hamburger ? "active" : ""}`}>
           <div className={`center ${hamburger ? "active" : ""}`}>
             <ul>
-              <div className="item">
-                <DarkModeOutlinedIcon
-                  className="icon"
-                  onClick={() => dispatch({ type: "TOGGLE" })}
-                />
-              </div>
               <Link to={"/"}>
                 <li>
                   <DashboardIcon className="icon" />

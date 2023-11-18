@@ -58,14 +58,16 @@
     position: absolute;
     justify-content: center;
     left: 0;
-    background: white;
+    background: #fff;
     height: 100vh;
     width: 0;
     top: 0;
     z-index: 12;
-    transition: all 1s;
+    transition: all .5s ease;
+    opacity: 0;
     &.active{
       width: 40%;
+      opacity: 1;
     }
     .center{
       transform: translateX(-50%);
