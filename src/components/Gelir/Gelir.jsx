@@ -17,7 +17,6 @@ import { db } from "../../firebase/config";
 import { message } from "antd";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../spinner/Spinner";
-import Price from "format-price";
 
 const Gelir = ({ handlesignout, user, setuser }) => {
   const [gelir, setGelir] = useState("");
