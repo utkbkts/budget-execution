@@ -11,13 +11,16 @@ import image3 from "../../components/image/Learning-bro.png";
 import image4 from "../../components/image/Team work-cuate.png";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
+import Spinner from "../../components/spinner/Spinner";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [Loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const onFinish = async (e) => {
     try {
+      setLoading(true);
       if (email && password) {
         const { user } = await signInWithEmailAndPassword(
           auth,
@@ -27,8 +30,10 @@ const Login = () => {
         localStorage.setItem("user", JSON.stringify(user));
         navigate("/");
         message.success("Başarıyla giriş yapıldı");
+        setLoading(false);
       }
     } catch (error) {
+      setLoading(false);
       console.log(error.message);
     }
   };
@@ -45,6 +50,14 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
+ 
+  useEffect(() => {
+    setLoading(false); 
+  }, []);
+
+  if (Loading) {
+    return <Spinner />;
+  }
   return (
     <div className="container-login">
       <Form
@@ -106,7 +119,7 @@ const Login = () => {
             htmlType="submit"
             className="login-form-button"
           >
-            Giriş Yap
+           {Loading ? "Giriş yapılıyor":" Giriş Yap"}
           </Button>
           <h4>
             Hesabın yok mu ? <Link to="/register">Kayıt ol</Link>

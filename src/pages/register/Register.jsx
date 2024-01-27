@@ -12,11 +12,14 @@ import image3 from "../../components/image/Learning-bro.png";
 import image4 from "../../components/image/Team work-cuate.png";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
+import Spinner from "../../components/spinner/Spinner";
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [file, setFile] = useState("");
+  const [Loading, setLoading] = useState(true);
+
   const navigate = useNavigate();
  
   const onFinish = async (e) => {
@@ -48,6 +51,14 @@ const Register = () => {
     const file = e.target.files[0];
     setFile(file);
   };
+   
+  useEffect(() => {
+    setLoading(false); 
+  }, []);
+
+  if (Loading) {
+    return <Spinner />;
+  }
   return (
     <div className="container-login">
        <Form
@@ -138,7 +149,7 @@ const Register = () => {
             htmlType="submit"
             className="login-form-button"
           >
-            Kayıt Ol
+            {!Loading ? "Kayıt Ol":"Kayıt Olunuyor"}
           </Button>
           <h4>
             Hesabın var mı ? <Link to="/login">Giriş Yap</Link>

@@ -2,11 +2,22 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "../sidebar/Sidebar";
 import Navbar from "../navbar/Navbar";
 import "./Gelir.scss";
-import { addDoc, collection, serverTimestamp, doc, updateDoc, getDoc, query, where, getDocs } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  serverTimestamp,
+  doc,
+  updateDoc,
+  getDoc,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import { db } from "../../firebase/config";
 import { message } from "antd";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../spinner/Spinner";
+import Price from "format-price";
 
 const Gelir = ({ handlesignout, user, setuser }) => {
   const [gelir, setGelir] = useState("");
@@ -34,10 +45,7 @@ const Gelir = ({ handlesignout, user, setuser }) => {
       try {
         // Check if the user already has a record
         const querySnapshot = await getDocs(
-          query(
-            collection(db, "Gelir"),
-            where("userId", "==", user.uid)
-          )
+          query(collection(db, "Gelir"), where("userId", "==", user.uid))
         );
 
         if (!querySnapshot.empty) {
@@ -67,6 +75,17 @@ const Gelir = ({ handlesignout, user, setuser }) => {
   if (loading) {
     return <Spinner />;
   }
+  const handleInputChange = (e) => {
+    var value = e.target.value,
+      value = value.split(".").join("");
+    if (value.length > 3) {
+      value =
+        value.substring(0, value.length - 3) +
+        "." +
+        value.substring(value.length - 3, value.length);
+    }
+    setGelir(value)
+  };
   return (
     <div className="new">
       <Sidebar />
@@ -81,7 +100,7 @@ const Gelir = ({ handlesignout, user, setuser }) => {
             <input
               type="number"
               value={gelir}
-              onChange={(e) => setGelir(e.target.value)}
+              onChange={handleInputChange}
               placeholder="Örneğin: 1000"
             />
             <div>

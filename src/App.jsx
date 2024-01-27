@@ -17,7 +17,6 @@ import Gelir from "./components/Gelir/Gelir";
 import Gider from "./components/Gider/Gider";
 import { auth } from "./firebase/config";
 import { signOut } from "firebase/auth";
-import Navbar from "./components/navbar/Navbar";
 import Reset from "./pages/reset/Reset";
 import Hatirlatma from "./pages/hatirlatma/Hatirlatma";
 
@@ -48,7 +47,6 @@ function App() {
     signOut(auth);
     setuser(null);
   };
-
   return (
     <div className={darkMode ? "app dark" : "app"}>
       {user ? (

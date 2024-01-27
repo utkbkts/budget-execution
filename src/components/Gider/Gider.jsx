@@ -38,7 +38,7 @@ const Gider = ({ handlesignout, user, setuser }) => {
       [name]: value,
     });
   };
-
+ 
   useEffect(() => {
     const checkPreviousGider = async () => {
       const giderRef = doc(db, "Gider", user.uid);

@@ -1,6 +1,4 @@
 import "./navbar.scss";
-import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext, useState } from "react";
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -8,12 +6,9 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import StoreIcon from "@mui/icons-material/Store";
-import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link } from "react-router-dom";
 const Navbar = ({ user, setuser, handlesignout }) => {
-  const { dispatch,darkMode } = useContext(DarkModeContext);
   const [hamburger, sethamburger] = useState(false);
   const handleclick = () => {
     sethamburger(!hamburger);
@@ -26,11 +21,8 @@ const Navbar = ({ user, setuser, handlesignout }) => {
           <span></span>
           <span></span>
         </div>
-        <div className="search">
-          <input type="text" placeholder="Search..." />
-          <SearchOutlinedIcon />
-        </div>
         <div className={`items ${hamburger ? "active" : ""}`}>
+          {hamburger && <div className="background-items"></div>}
           <div className={`center ${hamburger ? "active" : ""}`}>
             <ul>
               <Link to={"/"}>
