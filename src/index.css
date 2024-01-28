@@ -13,9 +13,10 @@ button{
   outline: none;
   border: 1px solid darkgrey;
   border-radius: 4px;
-  background: transparent;
+  background: black;
   cursor: pointer;
   transition: all .5s;
+  color:white;
 }
 button:hover{
   background: black;
